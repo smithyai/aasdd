@@ -53,6 +53,8 @@ abilities/
 
 Shared types used across abilities, organized by domain. Every type in any ability's inputs or outputs must be defined here — except scalar types (`text`, `number`, `boolean`, `timestamp`), which are universally understood and need no definition, and types from another spec, which are referenced by name as plain text with a note indicating their external origin. Each `concept.md` file opens with a `## {DomainName} domain` heading that scopes all types within it.
 
+A concept type is either a **structured type** with named properties or an **enum type** with a fixed set of values. Structured types list their properties in a Properties table; enum types list their values in a Value/Meaning table and have no properties.
+
 ```
 concepts/
   workspace/
@@ -63,7 +65,7 @@ concepts/
 
 ### Scenarios (optional)
 
-Concrete flows exercising the abilities in sequence. Illustrative, not exhaustive — useful for clarifying composition and defining integration test obligations. Each `scenario.md` contains one scenario: a description, a blockquote execution trace, and notable outcomes. Trace nodes are state names when the spec defines a state machine; use ability names when it does not.
+Concrete flows exercising the abilities in sequence. Illustrative, not exhaustive — useful for clarifying composition and defining integration test obligations. Each `scenario.md` contains one scenario: a description, a blockquote execution trace, and notable outcomes. Trace nodes are state names when the spec defines a state machine; use ability names when it does not. Every state name used in a trace must exist in the relevant `state-machine.md`.
 
 ### State Machine (optional)
 
@@ -116,9 +118,7 @@ Specs use **semantic versioning**. The version lives in `spec.md`.
 
 Any spec with a version below `1.0.0` is in draft — concepts and abilities may still change freely, and implementations should not be treated as stable contracts. At `1.0.0` the contract is established and all subsequent changes follow semver strictly.
 
-Implementations should pin to a `major.minor.x` spec version (e.g. `1.2.x`) to record which contract they target. Patch bumps carry no behavioral change — the only thing that may need updating is non-behavioral documentation (code comments, READMEs, or other prose that quotes the spec). Minor bumps add new abilities or types; major bumps are breaking. Both require an explicit implementation decision to adopt.
-
-The `**AASDD:**` field in `spec.md` records which version of the AASDD methodology the spec was written against. AASDD uses simple integer versioning (`v1`, `v2`, …) — changes are infrequent and always breaking enough to warrant a full integer increment. Tooling can use this field to select the correct rule set when verifying or scaffolding a spec.
+The `**AASDD:**` field in `spec.md` records which version of the AASDD methodology the spec was written against. AASDD uses simple integer versioning (`v1`, `v2`, …) — changes are infrequent and always breaking enough to warrant a full integer increment.
 
 ## Structured Representations
 
@@ -129,9 +129,7 @@ This means a spec has two equivalent forms:
 - **Markdown** — the directory of `.md` files defined by the templates in [CONVENTIONS.md](CONVENTIONS.md). This is the canonical form: human-readable, agent-consumable, and the artifact that is versioned and reviewed.
 - **Structured** — a machine-readable representation (JSON, YAML, or similar) that captures the same information. Useful for tooling, programmatic access, diffing, and interchange between systems.
 
-AASDD does not prescribe a schema for the structured form. As long as the conversion between structured and markdown is lossless, any schema that faithfully represents the spec constructs is valid. Tooling that operates on the structured form must be able to round-trip: structured → markdown → structured must produce an identical result.
-
-Agents consume specs in their markdown form directly. A well-structured markdown document — headings, prose, tables — is not a limitation compared to JSON; it is an advantage. Agents parse and reason over natural language far more reliably than they navigate deeply nested objects with opaque keys. A spec written in prose with clear section structure gives an agent the same information as a JSON schema, plus the semantic context that makes it unambiguous. The formatting conventions in [CONVENTIONS.md](CONVENTIONS.md) exist precisely to make specs both human-readable and agent-consumable without sacrificing either.
+AASDD does not prescribe a schema for the structured form. As long as the conversion between structured and markdown is lossless, any schema that faithfully represents the spec constructs is valid.
 
 Whatever the authoring workflow, the rendered markdown output must conform to the templates in [CONVENTIONS.md](CONVENTIONS.md).
 

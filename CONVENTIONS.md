@@ -139,7 +139,7 @@ Optional sections (in order when present):
 | `{property_name}` | text                      | {Description} |
 ````
 
-Enum types omit `#### Properties` and use a Value/Meaning table instead:
+Enum types (see [METHODOLOGY.md](METHODOLOGY.md#concepts)) omit `#### Properties` and use a Value/Meaning table instead:
 
 ````markdown
 ### {EnumTypeName}
@@ -170,8 +170,6 @@ Divergences use `—` (em dash):
 ````markdown
 > `{State1}` → `{State2}` — {ConditionName} → `{State3}`
 ````
-
-Trace nodes are state names when the spec defines a state machine; use ability names when it does not. Every state name used in a trace must exist in the relevant `state-machine.md`.
 
 Optional `### Example` section (in order when present):
 

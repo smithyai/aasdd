@@ -10,12 +10,12 @@ Agents are the primary intended use case. Because AASDD specs are precise and un
 
 ## Testing
 
-| Spec construct | Test obligation |
-| --- | --- |
-| **Invariant** | Assert the condition holds on every valid output |
-| **Failure mode** | One test per failure mode that triggers the exact condition and verifies the effect |
-| **Scenario** | One integration test per scenario, asserting the full execution trace and outcomes |
-| **Idempotency** | A test that invokes the ability twice with identical inputs and asserts identical outputs |
+| Spec construct   | Test obligation                                                                           |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| **Invariant**    | Assert the condition holds on every valid output                                          |
+| **Failure mode** | One test per failure mode that triggers the exact condition and verifies the effect       |
+| **Scenario**     | One integration test per scenario, asserting the full execution trace and outcomes        |
+| **Idempotency**  | A test that invokes the ability twice with identical inputs and asserts identical outputs |
 
 ## Development cycle
 
@@ -29,6 +29,19 @@ spec → contracts → tests → implementation          │
 ```
 
 *Contracts: concept types, ability entry-point signatures, and infrastructure interfaces derived from `decisions/`.*
+
+## Translation rules
+
+| Spec construct   | Implementation                                                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Concept type** | A concrete type in the language (struct, class, record, etc.) — use the exact PascalCase name from the spec                      |
+| **Ability**      | A module or function — the entry point uses the snake_case form of the ability name                                              |
+| **Invariant**    | An assertion — use the language's assertion or guard mechanism for cheap checks; return an error for runtime-enforced invariants |
+| **Failure mode** | An error variant — the PascalCase name from the spec maps directly to the variant name                                           |
+
+Concept names are canonical. Never rename a type or ability in the implementation — adapt casing to the language convention (`WorkspaceSnapshot` → `workspace_snapshot` in snake_case), but keep the name itself identical.
+
+If a failure path exists in the implementation but has no corresponding spec failure mode, the spec is incomplete — add the failure mode before merging. If new behavior, inputs, outputs, or options are added that are not reflected in the spec, update the spec first — implementation follows the spec, not the other way around.
 
 ## Agent instructions
 
@@ -45,12 +58,12 @@ If the spec version is below `1.0.0`, the contract may shift. Do not make irreve
 
 ## Translation rules
 
-| Spec construct | Implementation |
-| --- | --- |
-| Concept type | A concrete type in the language (struct, class, record, etc.) — use the exact PascalCase name from the spec |
-| Ability | A module or function — the entry point uses the snake_case form of the ability name |
-| Invariant | An assertion — use the language's assertion or guard mechanism for cheap checks; return an error for runtime-enforced invariants |
-| Failure mode | An error variant — the PascalCase name from the spec maps directly to the variant name |
+| Spec construct | Implementation                                                                                                                   |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Concept type   | A concrete type in the language (struct, class, record, etc.) — use the exact PascalCase name from the spec                      |
+| Ability        | A module or function — the entry point uses the snake_case form of the ability name                                              |
+| Invariant      | An assertion — use the language's assertion or guard mechanism for cheap checks; return an error for runtime-enforced invariants |
+| Failure mode   | An error variant — the PascalCase name from the spec maps directly to the variant name                                           |
 
 Concept names are canonical. Never rename a type or ability in the implementation — adapt casing to the language convention (`WorkspaceSnapshot` → `workspace_snapshot` in snake_case), but keep the name itself identical.
 
