@@ -9,7 +9,7 @@ A spec is a self-contained unit containing ability definitions, shared concept t
 ## Spec Structure
 
 ```
-spec.md             ← version, purpose, invariants
+spec.md             ← version, summary, invariants
 state-machine.md    ← orchestration FSM (optional)
 abilities/          ← recursive ability decomposition
 concepts/           ← shared type definitions
@@ -110,29 +110,29 @@ Specs use **semantic versioning**. The version lives in `spec.md`.
 
 | Change type | Example change                                                   | Version bump |
 | ----------- | ---------------------------------------------------------------- | ------------ |
-| **Major**   | Changed inputs/outputs, removed abilities, restructured concepts | `v2.0.0`     |
-| **Minor**   | New optional inputs, new abilities, new concept types            | `v1.1.0`     |
-| **Patch**   | Typos, wording, formatting                                       | `v1.0.1`     |
+| **Major**   | Changed inputs/outputs, removed abilities, restructured concepts | `2.0.0`      |
+| **Minor**   | New optional inputs, new abilities, new concept types            | `1.1.0`      |
+| **Patch**   | Typos, wording, formatting                                       | `1.0.1`      |
 
-**Status** signals spec maturity:
+Any spec with a version below `1.0.0` is in draft — concepts and abilities may still change freely, and implementations should not be treated as stable contracts. At `1.0.0` the contract is established and all subsequent changes follow semver strictly.
 
-- **Draft** — Actively being designed. Concepts and abilities may still change freely. Do not implement against a Draft spec unless you accept that the contract may shift under you.
-- **Stable** — The contract is established. Changes follow semver strictly. Implementation tracks the spec version.
-
-Status is derivable from the version: any spec with a version below `1.0.0` is Draft; `1.0.0` and above is Stable. The `**Status:**` field in `spec.md` is therefore optional — omit it and derive from the version, or include it for explicitness.
-
-Implementations should pin to a specific spec version to record which contract they target.
+Implementations should pin to a `major.minor.x` spec version (e.g. `1.2.x`) to record which contract they target. Patch bumps carry no behavioral change — the only thing that may need updating is non-behavioral documentation (code comments, READMEs, or other prose that quotes the spec). Minor bumps add new abilities or types; major bumps are breaking. Both require an explicit implementation decision to adopt.
 
 The `**AASDD:**` field in `spec.md` records which version of the AASDD methodology the spec was written against. AASDD uses simple integer versioning (`v1`, `v2`, …) — changes are infrequent and always breaking enough to warrant a full integer increment. Tooling can use this field to select the correct rule set when verifying or scaffolding a spec.
 
-## Structured Authoring
+## Structured Representations
 
-The file templates in [CONVENTIONS.md](CONVENTIONS.md) are fully deterministic: given a structured representation of a spec (abilities, concepts, states, transitions, etc.), every file can be generated mechanically with no judgment calls. An implementer may prefer to author a spec as structured data — JSON, YAML, or similar — and render the markdown files from it.
+The file templates in [CONVENTIONS.md](CONVENTIONS.md) are fully deterministic: given a structured representation of a spec (abilities, concepts, states, transitions, etc.), every file can be generated mechanically with no judgment calls. The reverse is also true — a conforming spec directory can be parsed into a structured representation with no ambiguity. The conversion is lossless in both directions.
 
-AASDD does not prescribe a schema or toolchain for this. The markdown files remain the canonical artifact — for a deliberate reason.
+This means a spec has two equivalent forms:
 
-Agents consume specs directly. A well-structured markdown document — headings, prose, tables — is not a limitation compared to JSON; it is an advantage. Agents parse and reason over natural language far more reliably than they navigate deeply nested objects with opaque keys. A spec written in prose with clear section structure gives an agent the same information as a JSON schema, plus the semantic context that makes it unambiguous. The formatting conventions in [CONVENTIONS.md](CONVENTIONS.md) exist precisely to make specs both human-readable and agent-consumable without sacrificing either.
+- **Markdown** — the directory of `.md` files defined by the templates in [CONVENTIONS.md](CONVENTIONS.md). This is the canonical form: human-readable, agent-consumable, and the artifact that is versioned and reviewed.
+- **Structured** — a machine-readable representation (JSON, YAML, or similar) that captures the same information. Useful for tooling, programmatic access, diffing, and interchange between systems.
 
-Whatever the authoring workflow, the rendered output must conform to the templates in [CONVENTIONS.md](CONVENTIONS.md).
+AASDD does not prescribe a schema for the structured form. As long as the conversion between structured and markdown is lossless, any schema that faithfully represents the spec constructs is valid. Tooling that operates on the structured form must be able to round-trip: structured → markdown → structured must produce an identical result.
+
+Agents consume specs in their markdown form directly. A well-structured markdown document — headings, prose, tables — is not a limitation compared to JSON; it is an advantage. Agents parse and reason over natural language far more reliably than they navigate deeply nested objects with opaque keys. A spec written in prose with clear section structure gives an agent the same information as a JSON schema, plus the semantic context that makes it unambiguous. The formatting conventions in [CONVENTIONS.md](CONVENTIONS.md) exist precisely to make specs both human-readable and agent-consumable without sacrificing either.
+
+Whatever the authoring workflow, the rendered markdown output must conform to the templates in [CONVENTIONS.md](CONVENTIONS.md).
 
 For naming conventions, formatting rules, and canonical file templates, see [CONVENTIONS.md](CONVENTIONS.md). For translating specs into working code — ordering, testing, and the development cycle — see [IMPLEMENTATION.md](IMPLEMENTATION.md).
