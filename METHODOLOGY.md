@@ -75,7 +75,7 @@ Place `state-machine.md` in the directory of the ability that owns its transitio
 
 ### Decisions
 
-Every root-level ability input requires a transport decision — HTTP, gRPC, CLI, queue, or otherwise. The only exception is runtime-intrinsic values the environment provides for free, like the current timestamp. Sub-ability inputs rarely need a decision because they are produced by the parent — a sub-ability always receives at least one parent-provided input by definition. Any additional caller-supplied inputs to a sub-ability (configuration, thresholds, credentials) are secondary and almost never cross a system boundary. Depth is not the signal; what matters is whether the input arrives from outside the system.
+Every root-level ability input requires a transport decision — HTTP, gRPC, CLI, queue, or otherwise. The only exception is runtime-intrinsic values the environment provides for free, like the current timestamp, and abilities whose output is entirely implicit and require no inputs at all. Sub-ability inputs rarely need a decision because they are produced by the parent — a sub-ability almost always receives at least one parent-provided input. Any additional caller-supplied inputs to a sub-ability (configuration, thresholds, credentials) are secondary and almost never cross a system boundary. Depth is not the signal; what matters is whether the input arrives from outside the system.
 
 The spec leaves the choice open; the decision closes it. Once recorded, a decision is a binding constraint on the implementation — choosing gRPC eliminates languages and runtimes that can't support it. What's optional is whether a decision exists yet; a spec can be valid without one if the choice hasn't been made. Each `decision.md` has Context, Requirement, and Decision sections.
 
@@ -95,7 +95,7 @@ All decisions in a spec must be mutually compatible. If two decisions point towa
 
 **Completeness:**
 
-4. Every ability must have typed inputs, typed outputs, invariants, and failure modes.
+4. Every ability must have typed outputs, invariants, and failure modes. Inputs are required unless the ability's output is entirely implicit — derived from the tool's own built-in state with no caller-supplied parameters (e.g. listing the versions known to the tool). When inputs are absent, the `### Inputs` section must be present and contain only `_None._` to make the absence explicit.
 5. Every type must be defined in `concepts/`, unless it is a scalar type (`text`, `number`, `boolean`, `timestamp`) or a type from another spec referenced by name with a note indicating its external origin.
 6. Cross-references use relative paths and must always resolve.
 

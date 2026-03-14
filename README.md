@@ -18,3 +18,9 @@ A methodology for building software from language-agnostic specifications struct
 | --- | --- |
 | [examples/link-checker/](examples/link-checker/) | Simple spec: one root ability, HTTP transport decision, sub-ability decomposition |
 | [examples/content-moderation/](examples/content-moderation/) | Spec with a state machine, multiple abilities, and a gRPC interaction channel decision |
+
+## Tooling
+
+| Tool | Description |
+| --- | --- |
+| [aasdd-cli](https://github.com/smithyai/aasdd-cli) | CLI for working with AASDD specs: validate spec directories against conventions, parse specs to/from a JSON representation, scaffold empty or example spec directories, and list supported AASDD versions |
