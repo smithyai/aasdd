@@ -2,29 +2,29 @@ Naming conventions, file naming rules, and canonical file templates for AASDD sp
 
 ## Naming
 
-| Thing            | Convention                         | Example                                   |
-| ---------------- | ---------------------------------- | ----------------------------------------- |
-| Ability names    | PascalCase verb phrase             | `ParsePrompt`, `SnapshotWorkspace`        |
-| Ability folders  | kebab-case                         | `parse-prompt/`, `snapshot-workspace/`    |
-| Type names       | PascalCase noun                    | `WorkspaceSnapshot`, `ChangeSet`          |
-| Concept folders  | kebab-case domain                  | `workspace/`, `planning/`                 |
-| Scenario folders | kebab-case description             | `happy-path/`, `max-retries-exhausted/`   |
-| Decision names   | PascalCase noun phrase             | `DocumentTransport`, `InteractionChannel` |
+| Thing            | Convention                         | Example                                       |
+| ---------------- | ---------------------------------- | --------------------------------------------- |
+| Ability names    | PascalCase verb phrase             | `ParsePrompt`, `SnapshotWorkspace`            |
+| Ability folders  | kebab-case                         | `parse-prompt/`, `snapshot-workspace/`        |
+| Type names       | PascalCase noun                    | `WorkspaceSnapshot`, `ChangeSet`              |
+| Concept folders  | kebab-case domain                  | `workspace/`, `planning/`                     |
+| Scenario folders | kebab-case description             | `happy-path/`, `max-retries-exhausted/`       |
+| Decision names   | PascalCase noun phrase             | `DocumentTransport`, `InteractionChannel`     |
 | Decision folders | kebab-case description             | `document-transport/`, `interaction-channel/` |
-| State names      | PascalCase adjective or participle | `Idle`, `Analyzing`, `Failed`, `Complete` |
+| State names      | PascalCase adjective or participle | `Idle`, `Analyzing`, `Failed`, `Complete`     |
 
 Type names are canonical across spec and implementation — adapt only the casing to the language convention (`WorkspaceSnapshot` → `workspace_snapshot` in snake_case).
 
 ## File Naming
 
-| Location | Artifact |
-| --- | --- |
-| Specification overview | `spec.md` |
-| Ability spec (at any depth) | `ability.md` |
-| Concept domain | `concept.md` |
-| Scenario | `scenario.md` |
-| State machine | `state-machine.md` |
-| Decision | `decision.md` |
+| Location                    | Artifact           |
+| --------------------------- | ------------------ |
+| Specification overview      | `spec.md`          |
+| Ability spec (at any depth) | `ability.md`       |
+| Concept domain              | `concept.md`       |
+| Scenario                    | `scenario.md`      |
+| State machine               | `state-machine.md` |
+| Decision                    | `decision.md`      |
 
 Spec artifacts use a fixed `<type>.md` filename — the directory name carries identity, the filename carries the type. All spec artifact files start at H2.
 
@@ -46,7 +46,6 @@ Spec artifacts use a fixed `<type>.md` filename — the directory name carries i
 
 **AASDD:** v{N}
 **Version:** {X}.{Y}.{Z}
-**Status:** {Draft | Stable | Deprecated}
 **Summary:** {One sentence describing what this spec covers.}
 
 ### Invariants
@@ -134,10 +133,10 @@ Optional sections (in order when present):
 
 #### Properties
 
-| Name              | Type                              | Description   |
-| ----------------- | --------------------------------- | ------------- |
-| `{property_name}` | [{TypeName}](#{typename})         | {Description} |
-| `{property_name}` | text                              | {Description} |
+| Name              | Type                      | Description   |
+| ----------------- | ------------------------- | ------------- |
+| `{property_name}` | [{TypeName}](#{typename}) | {Description} |
+| `{property_name}` | text                      | {Description} |
 ````
 
 Enum types omit `#### Properties` and use a Value/Meaning table instead:
@@ -206,8 +205,8 @@ stateDiagram-v2
 
 #### Orchestrator-Managed State
 
-| Name              | Type                                                 | Description   |
-| ----------------- | ---------------------------------------------------- | ------------- |
+| Name              | Type                                                   | Description   |
+| ----------------- | ------------------------------------------------------ | ------------- |
 | `{variable_name}` | [{TypeName}]({relative/path/to/concept.md#{typename}}) | {Description} |
 
 ### States

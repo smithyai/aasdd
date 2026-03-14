@@ -1,7 +1,7 @@
 ## Content Moderation
 
-**Version:** v1.0.0
-**Status:** Stable
+**AASDD:** v1
+**Version:** 1.0.0
 **Summary:** Accepts a user-generated submission and produces a moderation outcome by analyzing content, scoring it across policy dimensions, and applying a decision — escalating to human review when scores fall in an ambiguous range.
 
 ### Invariants

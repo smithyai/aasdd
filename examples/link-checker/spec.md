@@ -1,7 +1,7 @@
 ## Link Checker
 
-**Version:** v1.0.0
-**Status:** Stable
+**AASDD:** v1
+**Version:** 1.0.0
 **Summary:** Accepts a document and returns a report indicating which of its links are alive, dead, or unreachable.
 
 ### Invariants

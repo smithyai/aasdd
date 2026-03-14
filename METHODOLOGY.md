@@ -27,12 +27,12 @@ Every ability is a **black box**: typed inputs, typed outputs, invariants, and f
 
 Each ability is defined in an `ability.md` file with these required sections:
 
-| Section | Purpose |
-| --- | --- |
-| **Purpose** | One sentence: what this ability does |
-| **Inputs** | Typed inputs with descriptions |
-| **Outputs** | Typed outputs with descriptions |
-| **Invariants** | Behavioral rules that must always hold |
+| Section           | Purpose                                           |
+| ----------------- | ------------------------------------------------- |
+| **Purpose**       | One sentence: what this ability does              |
+| **Inputs**        | Typed inputs with descriptions                    |
+| **Outputs**       | Typed outputs with descriptions                   |
+| **Invariants**    | Behavioral rules that must always hold            |
 | **Failure Modes** | Exhaustive: what can go wrong and how it responds |
 
 Optional sections: `Idempotency` (present when the ability has retry or deduplication semantics worth specifying) and `Visualization` (a diagram of sub-ability structure, present only when the ability has sub-ability subdirectories). Visualization is for structure, not explanation — omit it whenever the directory tree and prose are sufficient.
@@ -108,17 +108,18 @@ All decisions in a spec must be mutually compatible. If two decisions point towa
 
 Specs use **semantic versioning**. The version lives in `spec.md`.
 
-| Change type | Example change | Version bump |
-| --- | --- | --- |
-| **Major** | Changed inputs/outputs, removed abilities, restructured concepts | `v2.0.0` |
-| **Minor** | New optional inputs, new abilities, new concept types | `v1.1.0` |
-| **Patch** | Typos, wording, formatting | `v1.0.1` |
+| Change type | Example change                                                   | Version bump |
+| ----------- | ---------------------------------------------------------------- | ------------ |
+| **Major**   | Changed inputs/outputs, removed abilities, restructured concepts | `v2.0.0`     |
+| **Minor**   | New optional inputs, new abilities, new concept types            | `v1.1.0`     |
+| **Patch**   | Typos, wording, formatting                                       | `v1.0.1`     |
 
 **Status** signals spec maturity:
 
 - **Draft** — Actively being designed. Concepts and abilities may still change freely. Do not implement against a Draft spec unless you accept that the contract may shift under you.
 - **Stable** — The contract is established. Changes follow semver strictly. Implementation tracks the spec version.
-- **Deprecated** — No new abilities will be added.
+
+Status is derivable from the version: any spec with a version below `1.0.0` is Draft; `1.0.0` and above is Stable. The `**Status:**` field in `spec.md` is therefore optional — omit it and derive from the version, or include it for explicitness.
 
 Implementations should pin to a specific spec version to record which contract they target.
 
