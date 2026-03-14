@@ -1,0 +1,28 @@
+name: Verify examples
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    strategy:
+      matrix:
+        example: [link-checker, content-moderation]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install aasdd
+        run: |
+          curl -fsSL "https://github.com/smithyai/aasdd-cli/releases/latest/download/aasdd-cli_$(curl -fsSL https://api.github.com/repos/smithyai/aasdd-cli/releases/latest | grep -o '"tag_name":"[^"]*"' | cut -d'"' -f4 | sed 's/^v//')_linux_amd64.tar.gz" \
+            | tar -xz -C /usr/local/bin aasdd
+
+      - name: Verify ${{ matrix.example }}
+        run: aasdd verify examples/${{ matrix.example }}
