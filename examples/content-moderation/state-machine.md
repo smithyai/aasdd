@@ -26,9 +26,9 @@ stateDiagram-v2
 
 | Name         | Type                                                                             | Description                                                                   |
 | ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `submission` | [Submission](../../concepts/submission/concept.md#submission)                    | The submission being processed; passed to every sub-ability.                  |
-| `features`   | optional [ContentFeatures](../../concepts/submission/concept.md#contentfeatures) | Set when leaving `Analyzing`; passed to `ScoreContent`.                       |
-| `scores`     | optional [ScoreSet](../../concepts/moderation/concept.md#scoreset)               | Set when leaving `Scoring`; passed to `MakeDecision` and `EscalateForReview`. |
+| `submission` | [Submission](concepts/submission/concept.md#submission)                    | The submission being processed; passed to every sub-ability.                  |
+| `features`   | optional [ContentFeatures](concepts/submission/concept.md#contentfeatures) | Set when leaving `Analyzing`; passed to `ScoreContent`.                       |
+| `scores`     | optional [ScoreSet](concepts/moderation/concept.md#scoreset)               | Set when leaving `Scoring`; passed to `MakeDecision` and `EscalateForReview`. |
 
 ### States
 

@@ -33,7 +33,9 @@ The [wiki](https://github.com/smithyai/aasdd/wiki) has practical guidance, tips,
 - [What AASDD Is Not](https://github.com/smithyai/aasdd/wiki/What-AASDD-Is-Not) — Common misconceptions and boundaries
 - [Using Agents](https://github.com/smithyai/aasdd/wiki/Using-Agents) — Spec authoring vs. spec-driven implementation
 - [Authoring Specs with Agents](https://github.com/smithyai/aasdd/wiki/Authoring-Specs-with-Agents) — Why one-pass generation fails and how to work iteratively
+- [Iterative Decomposition](https://github.com/smithyai/aasdd/wiki/Iterative-Decomposition) — Worked example of decomposing abilities from rough idea to leaf specs
 - [From Spec to Implementation](https://github.com/smithyai/aasdd/wiki/From-Spec-to-Implementation) — How a completed spec translates to working code
+- [Recovering from Spec Drift](https://github.com/smithyai/aasdd/wiki/Recovering-from-Spec-Drift) — How to detect and fix divergence between spec and implementation
 - [Spec Coverage](https://github.com/smithyai/aasdd/wiki/Spec-Coverage) — Drift, unimplemented constructs, and how to measure both
 - [Custom Sections](https://github.com/smithyai/aasdd/wiki/Custom-Sections) — Author-defined sections for figures, notes, and references
 - [Structured Representations](https://github.com/smithyai/aasdd/wiki/Structured-Representations) — JSON and YAML equivalents of a markdown spec
