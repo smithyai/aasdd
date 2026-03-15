@@ -8,12 +8,3 @@
 
 - Every submission that enters the pipeline receives exactly one `ModerationOutcome`.
 - A submission is never automatically approved or rejected while it is under human review.
-
-### Visualization
-
-```mermaid
-graph TD
-    S["Submission"] --> MC["ModerateContent"]
-    MC --> O["ModerationOutcome"]
-    click MC "abilities/moderate-content/"
-```

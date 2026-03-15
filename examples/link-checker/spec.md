@@ -8,12 +8,3 @@
 
 - Every link extracted from the document appears in the report exactly once.
 - The report's total count equals the number of unique links in the document.
-
-### Visualization
-
-```mermaid
-graph TD
-    D["Document"] --> CD["CheckDocument"]
-    CD --> R["DocumentReport"]
-    click CD "abilities/check-document/"
-```

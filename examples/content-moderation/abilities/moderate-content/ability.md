@@ -4,14 +4,14 @@
 
 ### Inputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name         | Type                                                          | Description              |
+| ------------ | ------------------------------------------------------------- | ------------------------ |
 | `submission` | [Submission](../../concepts/submission/concept.md#submission) | The content to moderate. |
 
 ### Outputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name      | Type                                                                        | Description                                       |
+| --------- | --------------------------------------------------------------------------- | ------------------------------------------------- |
 | `outcome` | [ModerationOutcome](../../concepts/moderation/concept.md#moderationoutcome) | The final moderation decision and its provenance. |
 
 ### Invariants
@@ -21,25 +21,9 @@
 
 ### Failure Modes
 
-| Failure | Condition | Effect |
-| --- | --- | --- |
-| `AnalysisError` | The submission content cannot be analyzed. | Error propagated to caller. |
-| `ScoringModelUnavailable` | The scoring model cannot be reached. | Error propagated to caller. |
-| `InsufficientScores` | Scores contain no dimensions covered by configured policy. | Error propagated to caller. |
-| `NoReviewerAvailable` | Escalation is required but no reviewer can accept the request. | Error propagated to caller. |
-
-### Visualization
-
-```mermaid
-graph TD
-    S["Submission"] --> AC["AnalyzeContent"]
-    AC -->|"ContentFeatures"| SC["ScoreContent"]
-    SC -->|"ScoreSet"| MD["MakeDecision"]
-    MD -->|"Approved / Rejected"| O["ModerationOutcome"]
-    MD -->|"Escalated"| ER["EscalateForReview"]
-    ER -->|"ModerationOutcome"| O
-    click AC "analyze-content/"
-    click SC "score-content/"
-    click MD "make-decision/"
-    click ER "escalate-for-review/"
-```
+| Failure                   | Condition                                                      | Effect                      |
+| ------------------------- | -------------------------------------------------------------- | --------------------------- |
+| `AnalysisError`           | The submission content cannot be analyzed.                     | Error propagated to caller. |
+| `ScoringModelUnavailable` | The scoring model cannot be reached.                           | Error propagated to caller. |
+| `InsufficientScores`      | Scores contain no dimensions covered by configured policy.     | Error propagated to caller. |
+| `NoReviewerAvailable`     | Escalation is required but no reviewer can accept the request. | Error propagated to caller. |

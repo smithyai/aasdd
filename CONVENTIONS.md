@@ -63,12 +63,6 @@ Optional sections (in order when present):
 | `{FailureName}` | {When this condition occurs} | {What happens} |
 ````
 
-````markdown
-### Visualization
-
-{A diagram or other visual representation of the spec's structure.}
-````
-
 ### `ability.md`
 
 Required sections in this order. Optional sections omitted entirely when not applicable.
@@ -107,11 +101,9 @@ Optional sections (in order when present):
 ### Idempotency
 
 {Brief statement of idempotency behavior.}
-
-### Visualization
-
-{A diagram or other visual representation of the ability's sub-ability structure.}
 ````
+
+After all required and recognized optional sections, any number of custom `###` sections may follow. Custom sections have no fixed template — their names and content are author-defined. This applies to all spec file types (`spec.md`, `ability.md`, `concept.md`, `scenario.md`, `state-machine.md`, `decision.md`).
 
 #### Type references
 

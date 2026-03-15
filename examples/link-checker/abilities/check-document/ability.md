@@ -4,14 +4,14 @@
 
 ### Inputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name       | Type                                                    | Description            |
+| ---------- | ------------------------------------------------------- | ---------------------- |
 | `document` | [Document](../../concepts/document/concept.md#document) | The document to check. |
 
 ### Outputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name     | Type                                                               | Description                                             |
+| -------- | ------------------------------------------------------------------ | ------------------------------------------------------- |
 | `report` | [DocumentReport](../../concepts/results/concept.md#documentreport) | The verification results for all links in the document. |
 
 ### Invariants
@@ -21,17 +21,6 @@
 
 ### Failure Modes
 
-| Failure | Condition | Effect |
-| --- | --- | --- |
+| Failure              | Condition                                               | Effect                      |
+| -------------------- | ------------------------------------------------------- | --------------------------- |
 | `UnparsableDocument` | The document content cannot be parsed to extract links. | Error propagated to caller. |
-
-### Visualization
-
-```mermaid
-graph TD
-    D["Document"] --> EL["ExtractLinks"]
-    EL -->|"list of Link"| VL["VerifyLink"]
-    VL -->|"list of LinkResult"| R["DocumentReport"]
-    click EL "extract-links/"
-    click VL "verify-link/"
-```

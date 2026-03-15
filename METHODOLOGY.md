@@ -35,7 +35,9 @@ Each ability is defined in an `ability.md` file with these required sections:
 | **Invariants**    | Behavioral rules that must always hold            |
 | **Failure Modes** | Exhaustive: what can go wrong and how it responds |
 
-Optional sections: `Idempotency` (present when the ability has retry or deduplication semantics worth specifying) and `Visualization` (a diagram of sub-ability structure, present only when the ability has sub-ability subdirectories). Visualization is for structure, not explanation — omit it whenever the directory tree and prose are sufficient.
+Optional sections: `Idempotency` (present when the ability has retry or deduplication semantics worth specifying).
+
+Any spec file (`spec.md`, `ability.md`, `concept.md`, `scenario.md`, `state-machine.md`, `decision.md`) may include additional custom sections after all required and recognized optional sections. Custom sections carry no methodology semantics — the methodology does not define, interpret, or enforce them. Use custom sections for supplementary material such as figures, architecture diagrams, external references, or notes.
 
 Abilities that produce effects still have typed outputs — the output is the acknowledgment of the effect, not the side effect itself.
 
