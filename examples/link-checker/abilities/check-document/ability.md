@@ -1,6 +1,6 @@
 ## CheckDocument
 
-**Purpose:** Extracts all links from a document and verifies each one, returning a full report.
+Extracts all links from a document and verifies each one, returning a full report.
 
 ### Inputs
 

@@ -1,6 +1,6 @@
 ## Approved Content
 
-**Description:** A submission with low scores on all dimensions is approved by policy without escalation.
+A submission with low scores on all dimensions is approved by policy without escalation.
 
 > `Analyzing` → `Scoring` → `Deciding` → `Complete`
 

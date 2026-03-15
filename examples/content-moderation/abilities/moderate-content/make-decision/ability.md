@@ -1,17 +1,17 @@
 ## MakeDecision
 
-**Purpose:** Applies configured policy thresholds to a score set and produces a moderation decision.
+Applies configured policy thresholds to a score set and produces a moderation decision.
 
 ### Inputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name     | Type                                                         | Description                        |
+| -------- | ------------------------------------------------------------ | ---------------------------------- |
 | `scores` | [ScoreSet](../../../concepts/moderation/concept.md#scoreset) | Scores computed by `ScoreContent`. |
 
 ### Outputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name       | Type                                                         | Description                           |
+| ---------- | ------------------------------------------------------------ | ------------------------------------- |
 | `decision` | [Decision](../../../concepts/moderation/concept.md#decision) | The outcome of the policy evaluation. |
 
 ### Invariants
@@ -22,6 +22,6 @@
 
 ### Failure Modes
 
-| Failure | Condition | Effect |
-| --- | --- | --- |
+| Failure              | Condition                                                         | Effect                      |
+| -------------------- | ----------------------------------------------------------------- | --------------------------- |
 | `InsufficientScores` | `scores` contains no dimensions covered by the configured policy. | Error propagated to caller. |

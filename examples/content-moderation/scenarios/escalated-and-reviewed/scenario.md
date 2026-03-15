@@ -1,6 +1,6 @@
 ## Escalated and Reviewed
 
-**Description:** A submission with ambiguous scores is escalated to a human reviewer, who provides a final decision before the review deadline.
+A submission with ambiguous scores is escalated to a human reviewer, who provides a final decision before the review deadline.
 
 > `Analyzing` → `Scoring` → `Deciding` → `Escalating` → `Complete`
 

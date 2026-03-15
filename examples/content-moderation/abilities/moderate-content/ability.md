@@ -1,6 +1,6 @@
 ## ModerateContent
 
-**Purpose:** Drives a submission through analysis, scoring, decision, and optional human review, returning a final moderation outcome.
+Drives a submission through analysis, scoring, decision, and optional human review, returning a final moderation outcome.
 
 ### Inputs
 

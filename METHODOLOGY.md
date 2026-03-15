@@ -4,7 +4,7 @@ The core methodology of Ability-Anchored Spec-Driven Development (AASDD): what i
 
 AASDD is a spec-driven methodology where systems are decomposed into **abilities** rather than components, services, or modules. An ability describes *what* a unit of the system can do — its purpose, inputs, outputs, behavioral invariants, and failure modes — without prescribing *how* it does it.
 
-A spec is a self-contained unit containing ability definitions, shared concept types, and optionally: scenarios, state machines (one per directory that owns transitions, each scoped to that directory), and technology decisions. How multiple specs are organized or related — including how cross-spec type references are versioned when a dependency spec releases a breaking change — is intentionally left outside the scope of this methodology and left to the implementer.
+A spec is a self-contained unit containing ability definitions, shared concept types, and optionally: scenarios, a state machine at the root ability level, and technology decisions. How multiple specs are organized or related — including how cross-spec type references are versioned when a dependency spec releases a breaking change — is intentionally left outside the scope of this methodology and left to the implementer.
 
 ## Spec Structure
 
@@ -25,11 +25,10 @@ Where the spec lives is left to the implementer. All that matters is that the di
 
 Every ability is a **black box**: typed inputs, typed outputs, invariants, and failure modes. The directory tree *is* the decomposition — nesting communicates parent-child relationships, and sub-abilities are internal to their parent.
 
-Each ability is defined in an `ability.md` file with these required sections:
+Each ability is defined in an `ability.md` file. The first paragraph after the heading states what this ability does — one sentence. Then the required sections:
 
-| Section           | Purpose                                           |
+| Section           | Content                                           |
 | ----------------- | ------------------------------------------------- |
-| **Purpose**       | One sentence: what this ability does              |
 | **Inputs**        | Typed inputs with descriptions                    |
 | **Outputs**       | Typed outputs with descriptions                   |
 | **Invariants**    | Behavioral rules that must always hold            |
@@ -73,9 +72,7 @@ Concrete flows exercising the abilities in sequence. Illustrative, not exhaustiv
 
 A formal FSM for specs where abilities execute in a coordinated sequence with branching, retries, or interruption. Use when ordering constraints and transition legality must be formalized; skip when abilities are independently invocable.
 
-A `state-machine.md` at the spec root coordinates the top-level lifecycle. A sub-ability that requires its own internal orchestration may have a `state-machine.md` scoped to its own directory — it follows the same template and is invisible to anything outside that ability.
-
-Place `state-machine.md` in the directory of the ability that owns its transitions — scope it no higher than necessary.
+A `state-machine.md` at the spec root coordinates the top-level lifecycle. A spec may define at most one state machine. If a sub-ability requires its own state-driven lifecycle, it is complex enough to be its own spec.
 
 ### Decisions
 

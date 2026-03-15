@@ -1,17 +1,17 @@
 ## AnalyzeContent
 
-**Purpose:** Parses a submission and extracts textual features needed for scoring.
+Parses a submission and extracts textual features needed for scoring.
 
 ### Inputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name         | Type                                                             | Description                |
+| ------------ | ---------------------------------------------------------------- | -------------------------- |
 | `submission` | [Submission](../../../concepts/submission/concept.md#submission) | The submission to analyze. |
 
 ### Outputs
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name       | Type                                                                       | Description                            |
+| ---------- | -------------------------------------------------------------------------- | -------------------------------------- |
 | `features` | [ContentFeatures](../../../concepts/submission/concept.md#contentfeatures) | Extracted features for the submission. |
 
 ### Invariants
@@ -21,6 +21,6 @@
 
 ### Failure Modes
 
-| Failure | Condition | Effect |
-| --- | --- | --- |
+| Failure         | Condition                                                                         | Effect                      |
+| --------------- | --------------------------------------------------------------------------------- | --------------------------- |
 | `AnalysisError` | The submission content is empty or cannot be parsed (e.g., unsupported encoding). | Error propagated to caller. |

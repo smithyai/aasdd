@@ -46,7 +46,8 @@ Spec artifacts use a fixed `<type>.md` filename — the directory name carries i
 
 **AASDD:** v{N}
 **Version:** {X}.{Y}.{Z}
-**Summary:** {One sentence describing what this spec covers.}
+
+{One sentence describing what this spec covers.}
 
 ### Invariants
 
@@ -70,7 +71,7 @@ Required sections in this order. Optional sections omitted entirely when not app
 ````markdown
 ## {AbilityName}
 
-**Purpose:** {One sentence stating what this ability does.}
+{One sentence stating what this ability does.}
 
 ### Inputs
 
@@ -150,7 +151,7 @@ Type column conventions: scalar types are plain text, same-file references use `
 ````markdown
 ## {ScenarioName}
 
-**Description:** {One sentence describing what makes this scenario distinct.}
+{One sentence describing what makes this scenario distinct.}
 
 > `{State1}` → `{State2}` → `{State3}`
 
@@ -173,14 +174,14 @@ Optional `### Example` section (in order when present):
 
 ### `state-machine.md`
 
-A `state-machine.md` may appear at the spec root (coordinating the top-level lifecycle) or inside any ability directory (scoped to that ability's internal orchestration). Both follow the same template. A sub-ability's `state-machine.md` is invisible to anything outside that ability.
+A `state-machine.md` appears at the spec root, alongside `spec.md`, coordinating the top-level lifecycle. A spec may define at most one state machine.
 
 Sections appear in this exact order. Optional sections omitted entirely when not applicable.
 
 ````markdown
 ## State Machine
 
-**Summary:** {One sentence describing what this machine orchestrates.}
+{One sentence describing what this machine orchestrates.}
 
 ```mermaid
 stateDiagram-v2
