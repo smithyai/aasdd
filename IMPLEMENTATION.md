@@ -72,6 +72,7 @@ Concept names are canonical. Never rename a type or ability in the implementatio
 Follow [IMPLEMENTATION.md](https://github.com/smithyai/aasdd/blob/main/IMPLEMENTATION.md) for ordering rules, testing obligations, and the development cycle.
 
 Key reminders:
+- After any change to a spec file, run `aasdd verify <spec-dir>` to confirm the spec conforms to the methodology and conventions. Fix all reported violations before proceeding.
 - If a failure path exists in the implementation but has no corresponding spec failure mode, the spec is incomplete — add the failure mode before merging.
 - If new behavior, inputs, outputs, or options are added that are not reflected in the spec (abilities, concepts, or decisions), update the spec first — implementation follows the spec, not the other way around.
 - If the spec includes a state machine, implement transitions exactly as defined in the Transitions table.
