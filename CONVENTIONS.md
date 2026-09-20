@@ -1,17 +1,24 @@
-Naming conventions, file naming rules, and canonical file templates for AASDD specs.
+Naming conventions, file naming rules, formatting rules, and canonical file templates for AASDD specs.
 
 ## Naming
 
-| Thing            | Convention                         | Example                                       |
-| ---------------- | ---------------------------------- | --------------------------------------------- |
-| Ability names    | PascalCase verb phrase             | `ParsePrompt`, `SnapshotWorkspace`            |
-| Ability folders  | kebab-case                         | `parse-prompt/`, `snapshot-workspace/`        |
-| Type names       | PascalCase noun                    | `WorkspaceSnapshot`, `ChangeSet`              |
-| Concept folders  | kebab-case domain                  | `workspace/`, `planning/`                     |
-| Scenario folders | kebab-case description             | `happy-path/`, `max-retries-exhausted/`       |
-| Decision names   | PascalCase noun phrase             | `DocumentTransport`, `InteractionChannel`     |
-| Decision folders | kebab-case description             | `document-transport/`, `interaction-channel/` |
-| State names      | PascalCase adjective or participle | `Idle`, `Analyzing`, `Failed`, `Complete`     |
+| Thing                             | Convention                         | Example                                       |
+| --------------------------------- | ---------------------------------- | --------------------------------------------- |
+| Spec names                        | Title Case noun phrase             | `Link Checker`, `Content Moderation`          |
+| Ability names                     | PascalCase verb phrase             | `ParsePrompt`, `SnapshotWorkspace`            |
+| Ability folders                   | kebab-case of the ability name     | `parse-prompt/`, `snapshot-workspace/`        |
+| Type names                        | PascalCase noun                    | `WorkspaceSnapshot`, `ChangeSet`              |
+| Concept domain names              | Title Case noun                    | `Workspace`, `Planning`                       |
+| Concept folders                   | kebab-case of the domain name      | `workspace/`, `planning/`                     |
+| Scenario names                    | Title Case phrase                  | `Happy Path`, `Max Retries Exhausted`         |
+| Scenario folders                  | kebab-case of the scenario name    | `happy-path/`, `max-retries-exhausted/`       |
+| Decision names                    | PascalCase noun phrase             | `DocumentTransport`, `InteractionChannel`     |
+| Decision folders                  | kebab-case of the decision name    | `document-transport/`, `interaction-channel/` |
+| State names                       | PascalCase adjective or participle | `Idle`, `Analyzing`, `Failed`, `Complete`     |
+| Failure names                     | PascalCase noun phrase             | `UnparsableDocument`, `NoReviewerAvailable`   |
+| Input, output, and property names | snake_case                         | `submission_id`, `token_count`                |
+
+Every folder name is derived from the heading of the artifact it holds: lowercase the words and join them with hyphens, splitting PascalCase at each capital (`SnapshotWorkspace` → `snapshot-workspace`, `Happy Path` → `happy-path`). A concept folder derives from the domain name alone, without the word "domain".
 
 Type names are canonical across spec and implementation — adapt only the casing to the language convention (`WorkspaceSnapshot` → `workspace_snapshot` in snake_case).
 
@@ -30,12 +37,13 @@ Spec artifacts use a fixed `<type>.md` filename — the directory name carries i
 
 ## Formatting Rules
 
-- One blank line between every section (heading, paragraph, table, list, blockquote, code block)
-- No trailing blank lines at end of file
-- No consecutive blank lines
-- Tables use `| --- |` separator rows (no `:` alignment markers)
-- All identifiers in table cells (input names, output names, property names, state names, failure names) are wrapped in backticks
-- The Ability column in state tables uses backticks for ability names; `—` (em dash) marks states with no mapped ability
+- Line endings are LF. Every file ends with exactly one newline character.
+- One blank line between every block (heading, paragraph, table, list, blockquote, code block); no consecutive blank lines.
+- Tables use a separator row of hyphens with no `:` alignment markers. Every cell is padded with spaces so that the pipes of a column align, and each separator cell spans the column width. This padded form is canonical: it is what tooling renders, and a spec in any other spacing is reformatted to it.
+- Table cells never contain a `|` character.
+- All identifiers in table cells (input, output, property, state, ability, failure, and scenario names) are wrapped in backticks. Type references are links or plain scalar names.
+- `—` (em dash) marks an empty cell: a state with no mapped ability, a Composition step performed by the parent itself, a success criterion with no scenario yet.
+- `_None._` as the entire content of a section states that the section is intentionally empty. `_Pending._` as the entire content of a required section states that it has not been written yet. `_Open._` as the entire content of a Decision section states that the choice has not been made.
 
 ## File Templates
 
@@ -44,15 +52,31 @@ Spec artifacts use a fixed `<type>.md` filename — the directory name carries i
 ````markdown
 ## {SpecName}
 
-**AASDD:** v{N}
+**AASDD:** v2
 **Version:** {X}.{Y}.{Z}
 
 {One sentence describing what this spec covers.}
+
+### Purpose
+
+{Who the system is for and what problem it solves. One short paragraph.}
+
+### Non-Goals
+
+- {Something the system deliberately does not do}
+
+### Success Criteria
+
+| Criterion                                       | Abilities       | Scenarios           |
+| ----------------------------------------------- | --------------- | ------------------- |
+| {An outcome observable from outside the system} | `{RootAbility}` | `{scenario-folder}` |
 
 ### Invariants
 
 - {Cross-cutting invariant that applies to the spec as a whole}
 ````
+
+Purpose, Non-Goals, Success Criteria, and Invariants are required. Non-Goals may be `_None._`. The Abilities column lists root ability names; the Scenarios column lists scenario folder names, or `—` while the spec is below `1.0.0` and no scenario exists yet.
 
 Optional sections (in order when present):
 
@@ -96,15 +120,42 @@ Required sections in this order. Optional sections omitted entirely when not app
 | `{FailureName}` | {When this condition occurs} | {What happens} |
 ````
 
+Inputs may be `_None._` when the ability takes no caller-supplied parameters; Failure Modes may be `_None._` when nothing can prevent the ability from producing its output. Any required section may be `_Pending._` while the spec is below `1.0.0`.
+
 Optional sections (in order when present):
 
 ````markdown
 ### Idempotency
 
-{Brief statement of idempotency behavior.}
+{The condition under which repeated invocation yields identical outputs.}
+
+### Composition
+
+| Step | Ability        | Consumes               | Produces          |
+| ---- | -------------- | ---------------------- | ----------------- |
+| 1    | `{SubAbility}` | `{input}` from parent  | `{output}`        |
+| 2    | `{SubAbility}` | `{input}` from step 1  | `{output}`        |
+| 3    | —              | `{output}` from step 2 | `{parent_output}` |
 ````
 
-After all required and recognized optional sections, any number of custom `###` sections may follow. Custom sections have no fixed template — their names and content are author-defined. This applies to all spec file types (`spec.md`, `ability.md`, `concept.md`, `scenario.md`, `state-machine.md`, `decision.md`).
+Composition is required for every non-leaf ability at `1.0.0` and above, except the root ability of a spec with a state machine. Each sub-ability appears in exactly one row. The Consumes cell names each input and its source — `from parent` or `from step N` where `N` is an earlier step — and may express iteration as `each {item} in {list} from step N`. A row whose Ability is `—` is work the parent performs itself. The final rows produce the parent's outputs.
+
+After all required and recognized optional sections, any number of custom `###` sections may follow. Custom sections have no fixed template — their names and content are author-defined. This applies to all spec file types.
+
+#### Delegated abilities
+
+A sub-ability defined by another spec contains only the following, and no other sections:
+
+````markdown
+## {AbilityName}
+
+{One sentence stating what this ability does.}
+
+**Spec:** {relative path or URL of the delegated spec directory}
+**Version:** {X}.{Y}.{Z}
+````
+
+The version is the exact version of the delegated spec the parent was authored against. The delegated spec must have exactly one root ability, whose contract is this ability's contract.
 
 #### Type references
 
@@ -153,15 +204,17 @@ Type column conventions: scalar types are plain text, same-file references use `
 
 {One sentence describing what makes this scenario distinct.}
 
-> `{State1}` → `{State2}` → `{State3}`
+> `{Node1}` → `{Node2}` → `{Node3}`
 
 - {Notable behavior or outcome}
 ````
 
-Divergences use `—` (em dash):
+Trace nodes are state names when the spec defines a state machine, and ability names otherwise. An ability trace begins with the root ability the caller invokes, followed by the sub-abilities invoked, in order; a sub-ability invoked once per item appears once.
+
+Divergences use `—` (em dash). The condition is a transition trigger or a failure mode name. In an ability trace, the node after the condition is the ability that handles the failure, or the root ability when the failure propagates to the caller:
 
 ````markdown
-> `{State1}` → `{State2}` — {ConditionName} → `{State3}`
+> `{Node1}` → `{Node2}` — {ConditionName} → `{Node3}`
 ````
 
 Optional `### Example` section (in order when present):
@@ -209,9 +262,9 @@ stateDiagram-v2
 
 ### Transitions
 
-| From          | To          | Trigger             | Data Passed Forward |
-| ------------- | ----------- | ------------------- | ------------------- |
-| `{FromState}` | `{ToState}` | {Trigger condition} | {Data description}  |
+| From          | To          | Trigger                               | Data Passed Forward |
+| ------------- | ----------- | ------------------------------------- | ------------------- |
+| `{FromState}` | `{ToState}` | `{TriggerName}` — {trigger condition} | {Data description}  |
 
 ### Transition Rules
 
@@ -224,24 +277,30 @@ stateDiagram-v2
 {Prose describing recovery behavior or non-standard lifecycle events.}
 ````
 
-The diagram is required. Use any diagram syntax that renders in your environment; the template uses Mermaid as a common default. `#### Orchestrator-Managed State` is present only when the orchestrator maintains state across the lifecycle. `### Exceptional Flows` is optional.
+The diagram is required. Use any diagram syntax that renders in your environment; the template uses Mermaid as a common default. Each Transitions row has exactly one named trigger; two transitions with the same From and To states are two rows. `#### Orchestrator-Managed State` is present only when the orchestrator maintains state across the lifecycle. `### Exceptional Flows` is optional.
 
 ### `decisions/{decision}/decision.md`
 
-A technology decision for one open choice the spec leaves to the implementer. Each decision file covers exactly one choice: the transport for an input that crosses a system boundary, the storage mechanism for persistent state, the model or service powering a capability. The three sections — **Context** (why a decision is needed), **Requirement** (what the implementation must provide), and **Decision** (the chosen approach) — are all required.
+A decision for one choice the contracts leave open: the transport for an input that crosses a system boundary, the storage mechanism for persistent state, the model or service powering a capability, or a question of behavior the implementation would otherwise settle on its own. Each decision file covers exactly one choice. **Context** (which abilities the decision constrains and why a choice is needed), **Requirement** (what the implementation must provide), and **Decision** (the chosen approach) are required. **Options** is required while the decision is open and optional once it is closed.
 
 ````markdown
 ## {DecisionName}
 
 ### Context
 
-{What spec concept this relates to and why a technology decision is needed.}
+{Which abilities this decision constrains, named in backticks, and why a choice is needed.}
 
 ### Requirement
 
 {What capability the implementation must provide to satisfy the spec.}
 
+### Options
+
+- {A candidate approach and its trade-off}
+
 ### Decision
 
 {The chosen approach and brief reasoning.}
 ````
+
+An open decision has `_Open._` as the entire content of its Decision section, and is permitted only while the spec is below `1.0.0`.

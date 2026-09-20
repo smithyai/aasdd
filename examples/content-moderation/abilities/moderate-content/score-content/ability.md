@@ -18,9 +18,10 @@ Computes policy dimension scores for a submission based on its extracted feature
 ### Invariants
 
 - Every score in `scores` is in the range [0.0, 1.0].
+- `scores` carries a value for every dimension; none is absent.
 
 ### Failure Modes
 
-| Failure                   | Condition                            | Effect                      |
-| ------------------------- | ------------------------------------ | --------------------------- |
-| `ScoringModelUnavailable` | The scoring model cannot be reached. | Error propagated to caller. |
+| Failure                   | Condition                                                                 | Effect                      |
+| ------------------------- | ------------------------------------------------------------------------- | --------------------------- |
+| `ScoringModelUnavailable` | The scoring model cannot be reached, or returns an unsuccessful response. | Error propagated to caller. |

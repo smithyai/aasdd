@@ -17,13 +17,12 @@ Checks whether a single link is reachable and returns its status.
 ### Invariants
 
 - `result.link` equals the input `link`.
+- `result.status` is `Alive` when the link's target responds successfully.
+- `result.status` is `Dead` when the link's target responds with an error.
+- `result.status` is `Unreachable` when the link's target does not respond at all.
 
 ### Failure Modes
 
-| Failure           | Condition                     | Effect                                      |
-| ----------------- | ----------------------------- | ------------------------------------------- |
-| `UnreachableHost` | The host cannot be contacted. | Returns a result with status `Unreachable`. |
-
-### Idempotency
-
-Invoking with the same link may return different results if the link's target changes between invocations. Not idempotent.
+| Failure      | Condition                                    | Effect                      |
+| ------------ | -------------------------------------------- | --------------------------- |
+| `InvalidUrl` | `link.url` is not a syntactically valid URL. | Error propagated to caller. |

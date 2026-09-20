@@ -17,10 +17,11 @@ Parses a submission and extracts textual features needed for scoring.
 ### Invariants
 
 - `features.token_count` is greater than zero.
-- `features.language` is set to a non-empty value.
+- `features.language` is a non-empty language code.
+- Every entry in `features.flagged_patterns` occurs in `submission.content`.
 
 ### Failure Modes
 
-| Failure         | Condition                                                                         | Effect                      |
-| --------------- | --------------------------------------------------------------------------------- | --------------------------- |
-| `AnalysisError` | The submission content is empty or cannot be parsed (e.g., unsupported encoding). | Error propagated to caller. |
+| Failure         | Condition                                                    | Effect                      |
+| --------------- | ------------------------------------------------------------ | --------------------------- |
+| `AnalysisError` | `submission.content` is empty, or cannot be decoded as text. | Error propagated to caller. |
