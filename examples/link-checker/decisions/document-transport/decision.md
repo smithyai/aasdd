@@ -6,8 +6,8 @@
 
 ### Requirement
 
-The implementation must provide a way for a caller to submit a `Document` and receive back a `DocumentReport`.
+The implementation must provide a way for a caller to submit a `Document` and receive back either a `DocumentReport` or the `UnparsableDocument` error.
 
 ### Decision
 
-HTTP — the caller submits the document as the request body and receives the report in the response.
+HTTP — the caller submits the document as the request body and receives the report in the response body. An `UnparsableDocument` failure is returned as a client error response.

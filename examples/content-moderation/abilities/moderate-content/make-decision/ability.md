@@ -1,12 +1,13 @@
 ## MakeDecision
 
-Applies configured policy thresholds to a score set and produces a moderation decision.
+Applies a moderation policy to a score set and produces a moderation decision.
 
 ### Inputs
 
-| Name     | Type                                                         | Description                        |
-| -------- | ------------------------------------------------------------ | ---------------------------------- |
-| `scores` | [ScoreSet](../../../concepts/moderation/concept.md#scoreset) | Scores computed by `ScoreContent`. |
+| Name     | Type                                                                         | Description                                  |
+| -------- | ---------------------------------------------------------------------------- | -------------------------------------------- |
+| `scores` | [ScoreSet](../../../concepts/moderation/concept.md#scoreset)                 | Scores computed by `ScoreContent`.           |
+| `policy` | [ModerationPolicy](../../../concepts/moderation/concept.md#moderationpolicy) | The thresholds and escalation band to apply. |
 
 ### Outputs
 
@@ -16,12 +17,12 @@ Applies configured policy thresholds to a score set and produces a moderation de
 
 ### Invariants
 
-- If any score exceeds the rejection threshold, `decision` is `Rejected`.
-- If no score exceeds any threshold, `decision` is `Approved`.
-- `Escalated` is returned only when at least one score falls in the configured escalation band.
+- If any score in `scores` is greater than or equal to `policy.rejection_threshold`, `decision` is `Rejected`.
+- Otherwise, if any score in `scores` is between `policy.escalation_band.lower` and `policy.escalation_band.upper` inclusive, `decision` is `Escalated`.
+- Otherwise, `decision` is `Approved`.
 
 ### Failure Modes
 
-| Failure              | Condition                                                         | Effect                      |
-| -------------------- | ----------------------------------------------------------------- | --------------------------- |
-| `InsufficientScores` | `scores` contains no dimensions covered by the configured policy. | Error propagated to caller. |
+| Failure         | Condition                                                                                                                                                                                                             | Effect                      |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| `InvalidPolicy` | `policy.escalation_band.lower` is greater than `policy.escalation_band.upper`, or `policy.escalation_band.upper` is greater than or equal to `policy.rejection_threshold`, or any of the three is outside [0.0, 1.0]. | Error propagated to caller. |
